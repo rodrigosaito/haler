@@ -29,6 +29,10 @@ module Haler
       end.to_json
     end
 
+    def method_missing(method, *args, &block)
+      return @object.send(method, *args, &block) if @object.respond_to? method
+      super
+    end
 
   end
 
