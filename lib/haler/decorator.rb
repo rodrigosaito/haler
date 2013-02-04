@@ -1,3 +1,5 @@
+require 'haler/decorator/enumerator'
+
 module Haler
 
   module Decorator
@@ -14,19 +16,23 @@ module Haler
     end
 
     def to_json
+      serialize.to_json
+    end
+
+    def serialize
       {}.tap do |hash|
         self.class.fields.each_pair do |name, field|
           hash[name] = field.serialize @object
         end
 
         if self.class.has_links?
-          hash["_links"] ||= {}
+          hash[:_links] ||= {}
           self.class.links.each_pair  do |rel, link|
-            hash["_links"][rel] = link.serialize
+            hash[:_links][rel] = link.serialize
           end
         end
 
-      end.to_json
+      end
     end
 
     def method_missing(method, *args, &block)

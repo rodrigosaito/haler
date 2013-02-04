@@ -11,3 +11,37 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 end
+
+# Test Helper Classes
+class Person
+
+  attr_accessor :id, :name, :age
+
+  def initialize(name = "Some Name", age = 25)
+    @id = 1
+    @name = name
+    @age = age
+  end
+
+end
+
+class PersonDecorator
+  include Haler::Decorator
+
+  field :name
+  field :age
+
+  link :self do
+    "/some-link"
+  end
+end
+
+class CustomPersonDecorator
+  include Haler::Decorator
+
+  field :name
+
+  link :self do
+    "/people/1"
+  end
+end
