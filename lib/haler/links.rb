@@ -1,29 +1,35 @@
-require 'haler/links/simple'
+#require 'haler/links/simple'
 
 module Haler
 
-  module Links
+  # Class that holds all the logic for links creation and serialization
+  class Links
 
-    def self.included(base)
-      base.class_eval do
-        extend ClassMethods
+    def initialize
+      @links = {}
+    end
+
+    def <<(rel, &block)
+      raise "Block not given, add method expects a block" unless block_given?
+      @links[rel] = block
+    end
+
+    def method_missing(method, *args, &block)
+      if @links.respond_to? method
+        @links.send(method, *args, &block)
+      else
+        super
       end
     end
 
-    module ClassMethods
-
-      def link(rel, &block)
-        links[rel] = Simple.new(rel, &block)
+    def serialize
+      {}.tap do |serialized|
+        @links.each_pair do |rel, link_proc|
+          serialized[rel] = {
+            href: link_proc.call
+          }
+        end
       end
-
-      def links
-        @links ||= {}
-      end
-
-      def has_links?
-        not links.empty?
-      end
-
     end
 
   end

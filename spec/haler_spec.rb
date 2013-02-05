@@ -34,6 +34,15 @@ describe Haler do
 
     end
 
+    context "when the object is a Class" do
+
+      let(:decorated) { Haler.decorate(Person) }
+
+      it "returns a Haler::Decorator::Collection" do
+        decorated.should be_a Haler::Decorator::Collection
+      end
+    end
+
   end
 
 end

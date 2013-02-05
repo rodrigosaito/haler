@@ -1,21 +1,38 @@
-require 'haler/decorator/enumerator'
-
 module Haler
 
   module Decorator
 
     def self.included(base)
       base.class_eval do
+        extend ClassMethods
+
         include Fields
-        include Links
       end
+    end
+
+    module ClassMethods
+
+      def link(rel, &block)
+        links.<<(rel, &block)
+      end
+
+      def links
+        @links ||= Links.new
+      end
+
+      def has_links?
+        not links.empty?
+      end
+
     end
 
     def initialize(object, options = {})
       @object = object
 
-      self.class.link :self do
-        "/#{resource}/#{@object.id}"
+      unless self.class.links.include?(:self)
+        self.class.link :self do
+          "/#{resource}/#{@object.id}"
+        end
       end
     end
 
@@ -30,10 +47,7 @@ module Haler
         end
 
         if self.class.has_links?
-          hash[:_links] ||= {}
-          self.class.links.each_pair  do |rel, link|
-            hash[:_links][rel] = link.serialize
-          end
+          hash[:_links] = self.class.links.serialize
         end
 
       end
@@ -45,9 +59,16 @@ module Haler
     end
 
     def resource
-      @object.class.name.pluralize.camelize(:lower)
+      resource_name.pluralize.camelize(:lower)
+    end
+
+    def resource_name
+      @object.class.name
     end
 
   end
 
 end
+
+require 'haler/decorator/enumerator'
+require 'haler/decorator/collection'

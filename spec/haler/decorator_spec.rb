@@ -6,6 +6,35 @@ describe Haler::Decorator do
     PersonDecorator.new(Person.new "Some Name", 25)
   end
 
+  describe ".link" do
+
+    class Klass
+      include Haler::Decorator
+
+      attr_accessor :id
+
+      def initialize
+        @id = 1
+      end
+
+    end
+
+    let(:klass) do
+      Klass
+    end
+
+    before do
+      klass.link :some_link do
+        "/some-link"
+      end
+    end
+
+    it "has defined link" do
+      klass.links.should include :some_link
+    end
+
+  end
+
   describe "#to_json" do
 
     let(:expected_json) do

@@ -23,6 +23,10 @@ class Person
     @age = age
   end
 
+  def self.all
+    [ Person.new ]
+  end
+
 end
 
 class PersonDecorator

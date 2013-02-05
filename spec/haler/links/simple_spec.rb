@@ -1,5 +1,5 @@
 require 'spec_helper'
-
+=begin
 describe Haler::Links::Simple do
 
   let(:link) do
@@ -25,3 +25,4 @@ describe Haler::Links::Simple do
   end
 
 end
+=end
