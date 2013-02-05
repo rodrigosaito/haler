@@ -16,4 +16,12 @@ describe Haler::Links::Simple do
 
   end
 
+  describe "#href" do
+
+    it "returns the href for the link" do
+      link.href.should eq "/some-link"
+    end
+
+  end
+
 end

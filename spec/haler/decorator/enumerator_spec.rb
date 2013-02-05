@@ -15,7 +15,7 @@ describe Haler::Decorator::Enumerator do
           age: 25,
           _links: {
             self: {
-              href: "/some-link"
+              href: "/people/1"
             }
           }
         }

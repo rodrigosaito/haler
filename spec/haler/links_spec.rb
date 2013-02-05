@@ -2,22 +2,31 @@ require 'spec_helper'
 
 describe Haler::Links do
 
-  let(:klass) do
-    class Klass
-      include Haler::Links
+  class Klass
+    include Haler::Links
+
+    attr_accessor :id
+
+    def initialize
+      @id = 1
     end
+
   end
 
-  before do
-    klass.link :self do
-      "/some-link"
-    end
+  let(:klass) do
+    Klass
   end
 
   describe ".link" do
 
+    before do
+      klass.link :some_link do
+        "/some-link"
+      end
+    end
+
     it "has defined link" do
-      klass.links.should include :self
+      klass.links.should include :some_link
     end
 
   end

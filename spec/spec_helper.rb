@@ -31,9 +31,9 @@ class PersonDecorator
   field :name
   field :age
 
-  link :self do
-    "/some-link"
-  end
+  #link :self do
+  #  "/some-link"
+  #end
 end
 
 class CustomPersonDecorator

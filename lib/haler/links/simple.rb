@@ -9,7 +9,11 @@ module Haler
       end
 
       def serialize
-        { href: @block.call }
+        { href: href }
+      end
+
+      def href
+        @block.call
       end
 
     end

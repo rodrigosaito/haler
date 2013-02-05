@@ -13,7 +13,7 @@ describe Haler::Decorator do
         "name" => "Some Name",
         "age" => 25,
         "_links" => {
-          "self" => { "href" => "/some-link" }
+          "self" => { "href" => "/people/1" }
         }
       }.to_json
     end
@@ -38,13 +38,29 @@ describe Haler::Decorator do
         name: "Some Name",
         age: 25,
         _links: {
-          self: { href: '/some-link' }
+          self: { href: '/people/1' }
         }
       }
     end
 
     it "serializes to hash" do
       decorated.serialize.should == expected_hash
+    end
+
+  end
+
+  describe "#resource" do
+
+    it "returns the resource name" do
+      decorated.resource.should eq "people"
+    end
+
+  end
+
+  describe "after initialization" do
+
+    it "has self link" do
+      decorated.class.links.should include :self
     end
 
   end

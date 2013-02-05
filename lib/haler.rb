@@ -1,5 +1,7 @@
 require "json"
 
+require "active_support/inflector"
+
 require "haler/version"
 require "haler/fields"
 require "haler/links"
