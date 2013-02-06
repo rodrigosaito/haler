@@ -26,8 +26,8 @@ module Haler
     def find_class
       from_options ||
         from_class_name ||
-        from_interface ||
-        from_type
+        from_type ||
+        from_interface
     end
 
     private
