@@ -13,32 +13,44 @@ module Haler
   # object passed as parameter or use the option :decorator_class
   # if passed as option
   def self.decorate(object, options = {})
-    decorator_class = from_options(options) ||
-                      from_class_name(object) ||
-                      from_interface(object) ||
-                      from_type(object)
+    decorator_class = DecoratorFinder.new(object, options).find_class
     decorator_class.new object
   end
 
-  private
-  def self.from_options(options)
-    options[:decorator_class]
-  end
+  class DecoratorFinder
 
-  def self.from_class_name(object)
-    begin
-      Object::const_get("#{object.class}Decorator")
-    rescue
-      nil
+    def initialize(object, options = {})
+      @object, @options = object, options
     end
-  end
 
-  def self.from_interface(object)
-    Haler::Decorator::Enumerator if object.respond_to? :each
-  end
+    def find_class
+      from_options ||
+        from_class_name ||
+        from_interface ||
+        from_type
+    end
 
-  def self.from_type(object)
-    Haler::Decorator::Collection if object.is_a? Class
+    private
+    def from_options
+      @options[:decorator_class]
+    end
+
+    def from_class_name
+      begin
+        Object::const_get("#{@object.class}Decorator")
+      rescue
+        nil
+      end
+    end
+
+    def from_interface
+      Haler::Decorator::Enumerator if @object.respond_to? :each
+    end
+
+    def from_type
+      Haler::Decorator::Collection if @object.is_a? Class
+    end
+
   end
 
 end
