@@ -6,7 +6,7 @@ describe Haler::Decorator do
     PersonDecorator.new(Person.new "Some Name", 25)
   end
 
-  describe ".link" do
+  describe Haler::Decorator::ClassMethods do
 
     class Klass
       include Haler::Decorator
@@ -23,14 +23,30 @@ describe Haler::Decorator do
       Klass
     end
 
-    before do
-      klass.link :some_link do
-        "/some-link"
+    describe ".link" do
+
+      before do
+        klass.link :some_link do
+          "/some-link"
+        end
       end
+
+      it "has defined link" do
+        klass.links.should include :some_link
+      end
+
     end
 
-    it "has defined link" do
-      klass.links.should include :some_link
+    describe ".embedded" do
+
+      before do
+        klass.embedded :some_resource
+      end
+
+      it "has defined embedded" do
+        klass.embeddeds.should include :some_resource
+      end
+
     end
 
   end

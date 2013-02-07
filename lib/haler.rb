@@ -5,6 +5,7 @@ require "active_support/inflector"
 require "haler/version"
 require "haler/fields"
 require "haler/links"
+require "haler/embedded"
 require "haler/decorator"
 
 module Haler

@@ -24,6 +24,14 @@ module Haler
         not links.empty?
       end
 
+      def embedded(res_name)
+        embeddeds.<<(res_name)
+      end
+
+      def embeddeds
+        @embeddeds ||= Embedded.new
+      end
+
     end
 
     def initialize(object, options = {})

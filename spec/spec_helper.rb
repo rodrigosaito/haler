@@ -13,6 +13,23 @@ RSpec.configure do |config|
 end
 
 # Test Helper Classes
+class Address
+
+  attr_accessor :id, :street
+
+  def initialize
+    @id = 1
+    @street = "Some Street"
+  end
+
+end
+
+class AddressDecorator
+  include Haler::Decorator
+
+  field :street
+end
+
 class Person
 
   attr_accessor :id, :name, :age
@@ -21,6 +38,10 @@ class Person
     @id = 1
     @name = name
     @age = age
+  end
+
+  def addresses
+    [ Address.new ]
   end
 
   def self.all
@@ -35,9 +56,8 @@ class PersonDecorator
   field :name
   field :age
 
-  #link :self do
-  #  "/some-link"
-  #end
+  embedded :addresses
+
 end
 
 class CustomPersonDecorator
