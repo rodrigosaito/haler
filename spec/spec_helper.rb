@@ -34,10 +34,10 @@ class Person
 
   attr_accessor :id, :name, :age
 
-  def initialize(name = "Some Name", age = 25)
-    @id = 1
-    @name = name
-    @age = age
+  def initialize(id = 1)
+    @id = id
+    @name = "Some Name #{id}"
+    @age = 25
   end
 
   def addresses
@@ -45,7 +45,11 @@ class Person
   end
 
   def self.all
-    [ Person.new ]
+    [].tap do |all|
+      (1..10).each do |i|
+        all << Person.new(i)
+      end
+    end
   end
 
 end
@@ -68,4 +72,25 @@ class CustomPersonDecorator
   link :self do
     "/people/1"
   end
+end
+
+# TODO rspec helper method?
+def person_hash
+  {
+    _links: {
+      self: { href: '/people/1' }
+    },
+    name: "Some Name 1",
+    age: 25,
+    _embedded: {
+      addresses: [
+        {
+          _links: {
+            self: { href: '/addresses/1' }
+          },
+          street: 'Some Street'
+        }
+      ]
+    }
+  }
 end

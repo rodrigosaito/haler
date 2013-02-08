@@ -22,11 +22,11 @@ module Haler
       end
     end
 
-    def serialize
+    def serialize(object)
       {}.tap do |serialized|
         @links.each_pair do |rel, link_proc|
           serialized[rel] = {
-            href: link_proc.call
+            href: link_proc.call(object)
           }
         end
       end

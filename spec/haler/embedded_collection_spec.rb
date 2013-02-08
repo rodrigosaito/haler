@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Haler::Embedded do
+describe Haler::EmbeddedCollection do
 
   let(:embedded) { described_class.new }
 
@@ -29,7 +29,7 @@ describe Haler::Embedded do
 
     it "serializes the embedded resource" do
       serialized.should eq expected
-    end
+   end
 
   end
 

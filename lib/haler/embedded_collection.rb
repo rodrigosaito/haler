@@ -1,6 +1,6 @@
 module Haler
 
-  class Embedded
+  class EmbeddedCollection
 
     def << (embedded_resource, options = {})
       embedded[embedded_resource] = options
@@ -11,9 +11,9 @@ module Haler
     end
 
     def method_missing(method, *args, &block)
-      super unless @embedded.respond_to? method
+      super unless embedded.respond_to? method
 
-      @embedded.send(method, *args, &block)
+      embedded.send(method, *args, &block)
     end
 
     def serialize(object)

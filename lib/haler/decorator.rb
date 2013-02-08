@@ -25,11 +25,11 @@ module Haler
       end
 
       def embedded(res_name)
-        embeddeds.<<(res_name)
+        embedded_collection << res_name
       end
 
-      def embeddeds
-        @embeddeds ||= Embedded.new
+      def embedded_collection
+        @embedded_collection ||= EmbeddedCollection.new
       end
 
     end
@@ -38,8 +38,8 @@ module Haler
       @object = object
 
       unless self.class.links.include?(:self)
-        self.class.link :self do
-          "/#{resource}/#{@object.id}"
+        self.class.link :self do |obj|
+          "/#{resource}/#{obj.id}"
         end
       end
     end
@@ -50,14 +50,17 @@ module Haler
 
     def serialize
       {}.tap do |hash|
+        if self.class.has_links?
+          hash[:_links] = self.class.links.serialize @object
+        end
+
         self.class.fields.each_pair do |name, field|
           hash[name] = field.serialize @object
         end
 
-        if self.class.has_links?
-          hash[:_links] = self.class.links.serialize
+        unless self.class.embedded_collection.empty?
+          hash[:_embedded] = self.class.embedded_collection.serialize @object
         end
-
       end
     end
 

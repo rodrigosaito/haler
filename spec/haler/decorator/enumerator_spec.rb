@@ -6,20 +6,10 @@ describe Haler::Decorator::Enumerator do
 
     let(:array) { [ Person.new ] }
 
-    let(:json) { described_class.new(array).to_json }
+    let(:json){ described_class.new(array).to_json }
 
     let(:expected_json) do
-      [
-        {
-          name: 'Some Name',
-          age: 25,
-          _links: {
-            self: {
-              href: "/people/1"
-            }
-          }
-        }
-      ].to_json
+      [ person_hash ].to_json
     end
 
     it "serializes to json array" do
@@ -27,8 +17,6 @@ describe Haler::Decorator::Enumerator do
     end
 
   end
-
-
 
 end
 

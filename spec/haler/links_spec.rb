@@ -5,8 +5,8 @@ describe Haler::Links do
   let(:links) { described_class.new }
 
   before do
-    links.<<(:self) do
-      "/some-link"
+    links.<<(:self) do |object|
+      "/some-link/#{object.id}"
     end
   end
 
@@ -35,12 +35,12 @@ describe Haler::Links do
   describe "#serialize" do
 
     let(:expected) do
-      { self: { href: "/some-link" } }
+      { self: { href: "/some-link/1" } }
     end
 
 
     it "serializes all links" do
-      links.serialize.should eq expected
+      links.serialize(Person.new).should eq expected
     end
 
   end

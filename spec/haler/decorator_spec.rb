@@ -3,7 +3,7 @@ require "spec_helper"
 describe Haler::Decorator do
 
   let(:decorated) do
-    PersonDecorator.new(Person.new "Some Name", 25)
+    PersonDecorator.new(Person.new)
   end
 
   describe Haler::Decorator::ClassMethods do
@@ -44,7 +44,7 @@ describe Haler::Decorator do
       end
 
       it "has defined embedded" do
-        klass.embeddeds.should include :some_resource
+        klass.embedded_collection.should include :some_resource
       end
 
     end
@@ -54,13 +54,7 @@ describe Haler::Decorator do
   describe "#to_json" do
 
     let(:expected_json) do
-      {
-        "name" => "Some Name",
-        "age" => 25,
-        "_links" => {
-          "self" => { "href" => "/people/1" }
-        }
-      }.to_json
+      person_hash.to_json
     end
 
     it "serializes to json" do
@@ -79,13 +73,7 @@ describe Haler::Decorator do
   describe "#serialize" do
 
     let(:expected_hash) do
-      {
-        name: "Some Name",
-        age: 25,
-        _links: {
-          self: { href: '/people/1' }
-        }
-      }
+      person_hash
     end
 
     it "serializes to hash" do

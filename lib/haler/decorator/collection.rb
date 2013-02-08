@@ -18,7 +18,7 @@ module Haler
 
       def serialize
         super.tap do |serialized|
-          serialized[resource] = Enumerator.new(@object.all).serialize
+          serialized[resource] = Haler.decorate(@object.all).serialize
         end
       end
 

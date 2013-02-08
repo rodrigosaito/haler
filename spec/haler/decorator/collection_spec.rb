@@ -11,15 +11,7 @@ describe Haler::Decorator::Collection do
         _links: {
           self: { href: "/people" }
         },
-        people: [
-          {
-            name: 'Some Name',
-            age: 25,
-            _links: {
-              self: { href: "/people/1" }
-            }
-          }
-        ]
+        people: Haler.decorate(Person.all).serialize
       }.to_json
     end
 
