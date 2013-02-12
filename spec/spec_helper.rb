@@ -30,6 +30,29 @@ class AddressDecorator
   field :street
 end
 
+class PersonFakeQuery < Array
+
+  def limit(limit)
+    @limit = limit
+
+    self
+  end
+
+  def offset(offset)
+    @offset = offset
+
+    self
+  end
+
+  def each(&block)
+    return super unless @limit
+    self[@offset..(@offset + @limit - 1)].each(&block)
+  end
+
+end
+
+
+
 class Person
 
   attr_accessor :id, :name, :age
@@ -44,11 +67,14 @@ class Person
     [ Address.new ]
   end
 
-  def self.all
-    [].tap do |all|
-      (1..10).each do |i|
-        all << Person.new(i)
+  def self.all(options = { limit: 10, offset: 0 })
+    PersonFakeQuery.new.tap do |all|
+      100.times do |id|
+        all << Person.new(id)
       end
+
+      all.limit options[:limit]
+      all.offset options[:offset]
     end
   end
 

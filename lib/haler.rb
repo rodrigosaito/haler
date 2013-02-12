@@ -15,6 +15,7 @@ module Haler
   # if passed as option
   def self.decorate(object, options = {})
     decorator_class = DecoratorFinder.new(object, options).find_class
+    raise NoDecoratorFoundError, "No Decorator found for object #{object} with options #{options}" unless decorator_class
     decorator_class.new object
   end
 
@@ -51,6 +52,10 @@ module Haler
     def from_type
       Haler::Decorator::Collection if @object.is_a? Class
     end
+
+  end
+
+  class NoDecoratorFoundError < Exception
 
   end
 

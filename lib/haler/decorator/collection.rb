@@ -9,6 +9,9 @@ module Haler
           "/#{resource}"
         end
 
+        @limit = options[:limit] || 10
+        @offset = options[:offset] || 0
+
         super
       end
 
@@ -18,7 +21,8 @@ module Haler
 
       def serialize
         super.tap do |serialized|
-          serialized[resource] = Haler.decorate(@object.all).serialize
+          to_serialize = @object.all(limit: @limit, offset: @offset)
+          serialized[resource] = Haler.decorate(to_serialize).serialize
         end
       end
 

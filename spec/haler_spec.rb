@@ -43,6 +43,16 @@ describe Haler do
       end
     end
 
+    context "when no Decorator class could be found" do
+
+      it "raises an error" do
+        expect {
+          Haler.decorate("invalid")
+        }.to raise_error(Haler::NoDecoratorFoundError)
+      end
+
+    end
+
   end
 
 end
