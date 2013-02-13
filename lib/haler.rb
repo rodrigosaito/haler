@@ -16,7 +16,7 @@ module Haler
   def self.decorate(object, options = {})
     decorator_class = DecoratorFinder.new(object, options).find_class
     raise NoDecoratorFoundError, "No Decorator found for object #{object} with options #{options}" unless decorator_class
-    decorator_class.new object
+    decorator_class.new object, options
   end
 
   class DecoratorFinder
