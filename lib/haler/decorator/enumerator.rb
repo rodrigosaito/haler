@@ -4,7 +4,7 @@ module Haler
 
     class Enumerator
 
-      def initialize(object)
+      def initialize(object, options = {})
         @object = object
       end
 

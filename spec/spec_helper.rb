@@ -78,6 +78,10 @@ class Person
     end
   end
 
+  def self.count
+    100
+  end
+
 end
 
 class PersonDecorator
