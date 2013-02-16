@@ -82,4 +82,4 @@ module Haler
 end
 
 require 'haler/decorator/enumerator'
-require 'haler/decorator/collection'
+require 'haler/decorator/resource'

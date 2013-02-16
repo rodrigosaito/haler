@@ -50,7 +50,7 @@ module Haler
     end
 
     def from_type
-      Haler::Decorator::Collection if @object.is_a? Class
+      Haler::Decorator::Resource if @object.is_a? Class
     end
 
   end

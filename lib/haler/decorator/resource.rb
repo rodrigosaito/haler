@@ -1,7 +1,7 @@
 module Haler
 
   module Decorator
-    class Collection
+    class Resource
       include Haler::Decorator
 
       def initialize(object, options = {})

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Haler::Decorator::Collection do
+describe Haler::Decorator::Resource do
 
   describe "#serialize" do
 

@@ -24,7 +24,7 @@ describe Haler do
 
     end
 
-    context "when the object is an Enumerator" do
+    context "when the object respond_to :each method" do
 
       let(:decorated) { Haler.decorate([ Person.new ]) }
 
@@ -39,7 +39,7 @@ describe Haler do
       let(:decorated) { Haler.decorate(Person) }
 
       it "returns a Haler::Decorator::Collection" do
-        decorated.should be_a Haler::Decorator::Collection
+        decorated.should be_a Haler::Decorator::Resource
       end
     end
 
