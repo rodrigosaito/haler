@@ -63,6 +63,19 @@ describe Haler::Decorator::Collection do
 
     end
 
+    context "when decorator_class for people embedded relation is passed" do
+
+      let(:serialized) { described_class.new(Person, person: { decorator_class: CustomPersonDecorator }).serialize }
+
+      let(:expected_people) do
+        Haler.decorate(Person.all[0..9], { person: { decorator_class: CustomPersonDecorator }}).serialize
+      end
+
+      it "serializes all people using the decorator_class" do
+        serialized[:people].should eq expected_people
+      end
+    end
+
   end
 
 

@@ -5,12 +5,33 @@ module Haler
       include Haler::Decorator
 
       def initialize(object, options = {})
+        @options = options
+        @limit = options[:limit] || 10
+        @offset = options[:offset] || 0
+
         self.class.link :self do
           "/#{resource}"
         end
 
-        @limit = options[:limit] || 10
-        @offset = options[:offset] || 0
+        self.class.link :next_page do |object|
+          next_offset = @offset + @limit
+
+          if object.count > next_offset
+            "/#{resource}?limit=#{@limit}&offset=#{next_offset}"
+          else
+            nil
+          end
+        end
+
+        self.class.link :prev_page do |object|
+          prev_offset = @offset - @limit
+
+          if prev_offset > 0
+            "/#{resource}?limit=#{@limit}&offset=#{prev_offset}"
+          else
+            nil
+          end
+        end
 
         super
       end
@@ -21,39 +42,10 @@ module Haler
 
       def serialize
         super.tap do |serialized|
-          serialized[:_links].tap do |links|
-            links[:next_page] = { href: next_page_link } if next_page?
-            links[:prev_page] = { href: prev_page_link } if prev_page?
-          end
-
           to_serialize = @object.all(limit: @limit, offset: @offset)
-          serialized[resource.to_sym] = Haler.decorate(to_serialize).serialize
+
+          serialized[resource.to_sym] = Haler.decorate(to_serialize, @options).serialize
         end
-      end
-
-      private
-      def next_offset
-        @offset + @limit
-      end
-
-      def prev_offset
-        @offset - @limit
-      end
-
-      def next_page_link
-        "/#{resource}?limit=#{@limit}&offset=#{next_offset}"
-      end
-
-      def prev_page_link
-        "/#{resource}?limit=#{@limit}&offset=#{prev_offset}"
-      end
-
-      def next_page?
-        @object.count > next_offset
-      end
-
-      def prev_page?
-        prev_offset > 0
       end
 
     end

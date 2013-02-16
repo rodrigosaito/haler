@@ -25,9 +25,12 @@ module Haler
     def serialize(object)
       {}.tap do |serialized|
         @links.each_pair do |rel, link_proc|
-          serialized[rel] = {
-            href: link_proc.call(object)
-          }
+          href = link_proc.call(object)
+          if href
+            serialized[rel] = {
+              href: link_proc.call(object)
+            }
+          end
         end
       end
     end

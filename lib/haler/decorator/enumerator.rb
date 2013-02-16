@@ -6,6 +6,7 @@ module Haler
 
       def initialize(object, options = {})
         @object = object
+        @options = options
       end
 
       def to_json
@@ -15,7 +16,9 @@ module Haler
       def serialize
         [].tap do |array|
           @object.each do |item|
-            array << Haler.decorate(item).serialize
+            options = @options[item.class.name.camelize(:lower).to_sym] || {}
+
+            array << Haler.decorate(item, options).serialize
           end
         end
       end

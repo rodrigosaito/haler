@@ -29,7 +29,6 @@ describe Haler::Links do
       end
     end
 
-
   end
 
   describe "#serialize" do
@@ -38,13 +37,23 @@ describe Haler::Links do
       { self: { href: "/some-link/1" } }
     end
 
-
     it "serializes all links" do
       links.serialize(Person.new).should eq expected
     end
 
+    context "when link block returns nil" do
+
+      before do
+        links.<<(:nil_link) do
+          nil
+        end
+      end
+
+      it "hides the link" do
+        links.serialize(Person.new).should_not include :nil_link
+      end
+    end
+
   end
-
-
 
 end
