@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Haler::EmbeddedCollection do
+describe Haler::Embedded::Collection do
 
   let(:embedded) { described_class.new }
 

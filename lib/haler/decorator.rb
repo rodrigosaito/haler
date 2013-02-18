@@ -4,23 +4,10 @@ module Haler
 
     def self.included(base)
       base.class_eval do
-        extend ClassMethods
-
         include Fields
         include Links
+        include Embedded
       end
-    end
-
-    module ClassMethods
-
-      def embedded(res_name)
-        embedded_collection << res_name
-      end
-
-      def embedded_collection
-        @embedded_collection ||= EmbeddedCollection.new
-      end
-
     end
 
     def initialize(object, options = {})

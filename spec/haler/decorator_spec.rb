@@ -6,37 +6,6 @@ describe Haler::Decorator do
     PersonDecorator.new(Person.new)
   end
 
-  describe Haler::Decorator::ClassMethods do
-
-    class Klass
-      include Haler::Decorator
-
-      attr_accessor :id
-
-      def initialize
-        @id = 1
-      end
-
-    end
-
-    let(:klass) do
-      Klass
-    end
-
-    describe ".embedded" do
-
-      before do
-        klass.embedded :some_resource
-      end
-
-      it "has defined embedded" do
-        klass.embedded_collection.should include :some_resource
-      end
-
-    end
-
-  end
-
   describe "#to_json" do
 
     let(:expected_json) do
