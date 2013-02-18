@@ -2,56 +2,35 @@ require 'spec_helper'
 
 describe Haler::Links do
 
-  let(:links) { described_class.new }
+  describe Haler::Links::ClassMethods do
 
-  before do
-    links.<<(:self) do |object|
-      "/some-link/#{object.id}"
-    end
-  end
+    class Klass
+      include Haler::Links
 
-  describe "#<<" do
+      attr_accessor :id
 
-    it "adds the link" do
-      links.should include :self
-    end
-
-    it "adds proc as value for link" do
-      links[:self].should be_a Proc
-    end
-
-    context "when block is not provided" do
-
-      it "raises an error" do
-        expect {
-          links.<<(:test)
-        }.to raise_error
+      def initialize
+        @id = 1
       end
+
     end
 
-  end
-
-  describe "#serialize" do
-
-    let(:expected) do
-      { self: { href: "/some-link/1" } }
+    let(:klass) do
+      Klass
     end
 
-    it "serializes all links" do
-      links.serialize(Person.new).should eq expected
-    end
-
-    context "when link block returns nil" do
+    describe ".link" do
 
       before do
-        links.<<(:nil_link) do
-          nil
+        klass.link :some_link do
+          "/some-link"
         end
       end
 
-      it "hides the link" do
-        links.serialize(Person.new).should_not include :nil_link
+      it "has defined link" do
+        klass.links.should include :some_link
       end
+
     end
 
   end

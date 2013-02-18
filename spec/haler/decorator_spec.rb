@@ -23,20 +23,6 @@ describe Haler::Decorator do
       Klass
     end
 
-    describe ".link" do
-
-      before do
-        klass.link :some_link do
-          "/some-link"
-        end
-      end
-
-      it "has defined link" do
-        klass.links.should include :some_link
-      end
-
-    end
-
     describe ".embedded" do
 
       before do

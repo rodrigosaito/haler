@@ -7,22 +7,11 @@ module Haler
         extend ClassMethods
 
         include Fields
+        include Links
       end
     end
 
     module ClassMethods
-
-      def link(rel, &block)
-        links.<<(rel, &block)
-      end
-
-      def links
-        @links ||= Links.new
-      end
-
-      def has_links?
-        not links.empty?
-      end
 
       def embedded(res_name)
         embedded_collection << res_name
