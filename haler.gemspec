@@ -19,4 +19,5 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'activesupport'
   gem.add_dependency 'rake'
+  gem.add_dependency 'httparty'
 end

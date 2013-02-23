@@ -8,6 +8,8 @@ require "haler/links"
 require "haler/embedded"
 require "haler/decorator"
 
+require "haler/navigator"
+
 module Haler
 
   # Finds the decorator class based on the class of the
