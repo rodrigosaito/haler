@@ -10,6 +10,10 @@ module Haler
         @options[:to]
       end
 
+      def key_field?
+        @options[:key_field]
+      end
+
       def initialize(name, options = {})
         @name, @options = name, options
       end

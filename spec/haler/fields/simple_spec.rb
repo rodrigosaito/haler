@@ -38,4 +38,24 @@ describe Haler::Fields::Simple do
 
   end
 
+  describe "#key_field?" do
+
+    context "when key_field:true option is passed" do
+
+      let(:subject) { described_class.new :name, key_field: true }
+
+      it { should be_key_field }
+
+    end
+
+    context "when key_field option is not passed" do
+
+      let(:subject) { described_class.new :name }
+
+      it { should_not be_key_field }
+
+    end
+
+  end
+
 end

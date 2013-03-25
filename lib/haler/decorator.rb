@@ -12,6 +12,7 @@ module Haler
 
     def initialize(object, options = {})
       @object = object
+      @options = options
 
       unless self.class.links.include?(:self)
         self.class.link :self do |obj|
@@ -31,10 +32,13 @@ module Haler
         end
 
         self.class.fields.each_pair do |name, field|
-          hash[name] = field.serialize @object
+          # TODO find a better way to do that
+          if !only_key_fields? || (only_key_fields? && field.key_field?)
+            hash[name] = field.serialize @object
+          end
         end
 
-        unless self.class.embedded_collection.empty?
+        unless only_key_fields? || self.class.embedded_collection.empty?
           hash[:_embedded] = self.class.embedded_collection.serialize @object
         end
       end
@@ -51,6 +55,10 @@ module Haler
 
     def resource_name
       @object.class.name
+    end
+
+    def only_key_fields?
+      @options[:only_key_fields]
     end
 
   end

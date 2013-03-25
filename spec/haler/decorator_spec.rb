@@ -35,6 +35,25 @@ describe Haler::Decorator do
       decorated.serialize.should == expected_hash
     end
 
+    context "when only_key_fields: true is passed" do
+
+      let(:decorated) { PersonDecorator.new Person.new, only_key_fields: true }
+
+      let(:expected_hash) do
+        {
+          _links: {
+            self: { href: '/people/1' }
+          },
+          name: "Some Name 1"
+        }
+      end
+
+      it "serializes only key fields" do
+        decorated.serialize.should eq expected_hash
+      end
+
+    end
+
   end
 
   describe "#resource" do

@@ -60,8 +60,6 @@ class PersonFakeQuery < Array
 
 end
 
-
-
 class Person
 
   attr_accessor :id, :name, :age
@@ -96,7 +94,7 @@ end
 class PersonDecorator
   include Haler::Decorator
 
-  field :name
+  field :name, key_field: true
   field :age
 
   embedded :addresses
