@@ -106,9 +106,6 @@ class CustomPersonDecorator
 
   field :name
 
-  link :self do
-    "/people/1"
-  end
 end
 
 # TODO rspec helper method?

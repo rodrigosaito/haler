@@ -30,6 +30,21 @@ describe Haler::Decorator::Enumerator do
 
     end
 
+    context "when only_key_fields: true is passed" do
+
+      let(:serialized) { described_class.new(array, { person: { only_key_fields: true }}).serialize }
+
+      let(:expected_hash) do
+        [ PersonDecorator.new(array.first, { only_key_fields: true }).serialize ]
+      end
+
+      it "serializes with only key_fields" do
+        serialized.should eq expected_hash
+        puts serialized
+      end
+
+    end
+
   end
 
 end

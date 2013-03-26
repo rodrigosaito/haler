@@ -9,7 +9,7 @@ describe Haler::Decorator::Resource do
         _links: {
           self: { href: "/people" }
         },
-        people: Haler.decorate(Person.all[range]).serialize
+        people: Haler.decorate(Person.all[range], { person: { only_key_fields: true } }).serialize
       }
     end
 
