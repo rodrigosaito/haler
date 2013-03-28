@@ -21,7 +21,7 @@ module Haler
       def serialize(object)
         {}.tap do |serialized|
           embedded.each_pair do |name, options|
-            serialized[name] = Haler.decorate(object.send(name)).serialize
+            serialized[name] = Haler.decorate(object.send(name), options).serialize
           end
         end
       end

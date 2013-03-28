@@ -40,7 +40,6 @@ describe Haler::Decorator::Enumerator do
 
       it "serializes with only key_fields" do
         serialized.should eq expected_hash
-        puts serialized
       end
 
     end

@@ -44,7 +44,7 @@ module Haler
         super.tap do |serialized|
           to_serialize = @object.all(limit: @limit, offset: @offset)
 
-          serialized[resource.to_sym] = Haler.decorate(to_serialize, @options.merge({ person: { only_key_fields: true } })).serialize
+          serialized[resource.to_sym] = Haler.decorate(to_serialize, @options.merge({ resource_name.camelize(:lower).to_sym => { only_key_fields: true } })).serialize
         end
       end
 

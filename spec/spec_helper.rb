@@ -24,11 +24,14 @@ end
 # Test Helper Classes
 class Address
 
-  attr_accessor :id, :street
+  attr_accessor :id, :street, :number, :city, :state
 
   def initialize
     @id = 1
     @street = "Some Street"
+    @number = 123
+    @city = "A City"
+    @state = "The State"
   end
 
 end
@@ -37,6 +40,10 @@ class AddressDecorator
   include Haler::Decorator
 
   field :street
+  field :number
+  field :city
+  field :state
+
 end
 
 class PersonFakeQuery < Array
@@ -121,8 +128,7 @@ def person_hash
         {
           _links: {
             self: { href: '/addresses/1' }
-          },
-          street: 'Some Street'
+          }
         }
       ]
     }
