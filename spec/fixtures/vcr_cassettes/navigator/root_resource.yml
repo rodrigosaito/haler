@@ -1,0 +1,32 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:5000/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 28 Mar 2013 13:48:50 GMT
+      Status:
+      - 200 OK
+      Connection:
+      - close
+      Content-Type:
+      - application/hal+json
+      Content-Length:
+      - '66'
+      X-Content-Type-Options:
+      - nosniff
+    body:
+      encoding: UTF-8
+      string: '{"_links":{"self":{"href":"/"},"customers":{"href":"/customers"}}}'
+    http_version: 
+  recorded_at: Thu, 28 Mar 2013 13:48:50 GMT
+recorded_with: VCR 2.4.0

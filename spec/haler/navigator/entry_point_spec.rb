@@ -11,18 +11,21 @@ describe Haler::Navigator::EntryPoint do
   describe "#links" do
 
     it "returns a Links object" do
+      pending
       VCR.use_cassette("navigator/links") do
         described.links.should be_a Haler::Navigator::Links
       end
     end
 
     it "returns a list of links" do
+      pending
       VCR.use_cassette("navigator/links") do
         described.links.keys.should eq [:self, :some_resource ]
       end
     end
 
     it "issues only one call even when calling links more than once" do
+      pending
       VCR.use_cassette("navigator/links") do
         described.links
         described.links
@@ -38,12 +41,14 @@ describe Haler::Navigator::EntryPoint do
     end
 
     it "returns an EntryPoint" do
+      pending
       VCR.use_cassette("navigator/links") do
         navigate_to.should be_a described_class
       end
     end
 
     it "returns an EntryPoint with base_uri pointing to resource" do
+      pending
       VCR.use_cassette("navigator/links") do
         navigate_to.base_uri.should eq some_resource_uri
       end
@@ -54,6 +59,7 @@ describe Haler::Navigator::EntryPoint do
   describe "#attrs" do
 
     it "returns an Attributes object" do
+      pending
       VCR.use_cassette("navigator/links") do
         described.attrs.should be_a Haler::Navigator::Attributes
       end
@@ -62,6 +68,7 @@ describe Haler::Navigator::EntryPoint do
   end
 
   it "issues only one request" do
+    pending
     # VCR would raise an error if more than one request is issued
     VCR.use_cassette("navigator/links") do
       described.links
