@@ -1,12 +1,11 @@
 require "haler/navigator/resource"
-require "haler/navigator/entry_point"
 
 module Haler
 
   module Navigator
 
     def self.entry_point(url)
-      Resource.new(url)
+      Resource.new(base_url: url)
     end
 
   end
